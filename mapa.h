@@ -4,24 +4,16 @@
 
 class Mapa {
 private:
-
-    int grade[10][10] = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-    };
+    float alturaBloco = 60.f;
+    float larguraBloco = 80.f;
+    int grade[10][10];
     
     sf::RectangleShape bloco;
-    float tamanhoBloco = 50.f;
+
+
 
 public:
     Mapa();
     void desenhar(sf::RenderWindow& window);
+    bool Colisao(sf::Vector2f posicao);
 };

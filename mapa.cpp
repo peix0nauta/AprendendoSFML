@@ -23,19 +23,34 @@ int valores[10][10] = {
         }
     }
 
-    bloco.setSize({80.f, 60.f});
+    bloco.setSize({larguraBloco, alturaBloco});
 }
 
 void Mapa::desenhar(sf::RenderWindow& window) {
-    for (int i = 0; i < 10; i++) {         // Linhas (Y)
-        for (int j = 0; j < 10; j++) {     // Colunas (X)
+    for (int i = 0; i < 10; i++) {       
+        for (int j = 0; j < 10; j++) {     
             
             if (grade[i][j] == 1) {
                 bloco.setFillColor(sf::Color::White); // Parede
-                bloco.setPosition({j * 80.f, i * 60.f});
+                bloco.setPosition({j * larguraBloco, i * alturaBloco});
                 window.draw(bloco);
             }
-            // Se for 0, não desenhamos nada (fica o fundo preto)
+
         }
     }
 }
+
+
+bool Mapa::Colisao(sf::Vector2f posicao){
+
+    int coluna = static_cast<int>(posicao.x / larguraBloco);
+    int linha = static_cast<int>(posicao.y / alturaBloco);
+
+    if (linha < 0 || linha >= 10 || coluna < 0 || coluna >= 10) {
+        return true; 
+    }
+ 
+    return grade[linha][coluna]==1;
+}
+
+

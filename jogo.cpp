@@ -12,9 +12,10 @@ Game::Game() : window(sf::VideoMode({800, 600}), "Meu Jogo UTFPR") {
 
 void Game:: Atualizar(){
 
-    jogador.gerenciarMovimentacao();
+    jogador.gerenciarMovimentacao(map);
 
     jogador.atirar(balas);
+    jogador.trocaCor();
 
     for (auto& b : balas) {
         b.movebala(); 
