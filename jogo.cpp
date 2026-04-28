@@ -6,16 +6,21 @@
 
 
 Game::Game() : window(sf::VideoMode({800, 600}), "Meu Jogo UTFPR") {
-    window.setFramerateLimit(60); 
+    window.setFramerateLimit(60);  
+    camera.setSize(sf::Vector2f(800.f, 600.f));
 
 }
 
 void Game:: Atualizar(){
 
-    jogador.gerenciarMovimentacao(map);
+    sf::Vector2f posJogador = jogador.getPosiçao();
+    camera.setCenter(posJogador);
 
+    
+    jogador.gerenciarMovimentacao(map);
     jogador.atirar(balas);
     jogador.trocaCor();
+
 
     for (auto& b : balas) {
         b.movebala(); 
@@ -28,6 +33,7 @@ void Game:: Atualizar(){
 
 void Game::Renderizar() {
     window.clear();
+    window.setView(camera);
 
     map.desenhar(window);
     jogador.desenhar(window); 

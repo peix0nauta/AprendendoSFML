@@ -11,6 +11,11 @@ Player::Player() {
     tempoRecarga=0.5f;
 }
 
+sf::Vector2f Player::getPosiçao(){
+    sf::Vector2f pos =  corpo.getPosition();
+    return pos;
+}
+
 
 
 void Player::gerenciarMovimentacao(Mapa& map) {

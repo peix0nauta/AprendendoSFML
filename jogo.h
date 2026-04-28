@@ -8,6 +8,7 @@ class Game{
         std::vector<Projetil> balas;
         Player jogador;
         sf::RenderWindow window;
+        sf::View camera;
         Mapa map;
         void ProcessarEventos();
         void Atualizar();

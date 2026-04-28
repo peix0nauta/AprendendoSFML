@@ -16,7 +16,7 @@ public:
     void desenhar(sf::RenderWindow& window);
     void trocaCor();
     void atirar(std::vector<Projetil>& listaDeBalas);
-
+    sf::Vector2f getPosiçao();
     
 };
 

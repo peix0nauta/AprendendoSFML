@@ -4,9 +4,11 @@
 
 class Mapa {
 private:
-    float alturaBloco = 60.f;
-    float larguraBloco = 80.f;
-    int grade[10][10];
+    static const int LINHAS=12,
+                     COLUNAS=100;
+    float alturaBloco = 50.f;
+    float larguraBloco = 50.f;
+    int grade[LINHAS][COLUNAS];
     
     sf::RectangleShape bloco;
 
