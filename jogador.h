@@ -7,6 +7,8 @@ private:
     sf::CircleShape corpo;
     float velocidade;
     int raio;
+    sf::Clock relogioTiro; 
+    float tempoRecarga;
 
 public:
     Player(); // Este é o "inicializa" automático (Construtor)

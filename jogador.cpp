@@ -1,5 +1,5 @@
 #include "jogador.h"
-
+#include <SFML/Window/Keyboard.hpp>
 
 // O Construtor faz o papel da função 'inicializar'
 Player::Player() {
@@ -8,6 +8,7 @@ Player::Player() {
     corpo.setPosition({400.f, 300.f});
     velocidade = 1.0f;
     raio = 50;
+    tempoRecarga=0.5f;
 }
 
 
@@ -61,21 +62,33 @@ void Player::trocaCor(){
 void Player::atirar(std::vector<Projetil>& listaDeBalas) {
     sf::Vector2f pos = corpo.getPosition();
 
+    if (relogioTiro.getElapsedTime().asSeconds() >= tempoRecarga) {
+            
+            bool atirou = false;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
-        listaDeBalas.push_back(Projetil((pos.x+raio), pos.y, 1));
-    }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
+                listaDeBalas.push_back(Projetil((pos.x+raio), pos.y, 1));
+                atirou = true;
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
+                listaDeBalas.push_back(Projetil((pos.x+raio), (pos.y+raio*2), 2));
+                atirou = true;
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+                listaDeBalas.push_back(Projetil(pos.x, (pos.y+raio), 3));
+                atirou = true;
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+                listaDeBalas.push_back(Projetil((pos.x+raio*2), (pos.y+raio), 4));
+                atirou = true;
+            }
 
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-        listaDeBalas.push_back(Projetil((pos.x+raio), (pos.y+raio*2), 2));
-    }
+            if (atirou) {
+                 relogioTiro.restart(); // Zera o cronômetro para começar a contar de novo
+            }
 
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-        listaDeBalas.push_back(Projetil(pos.x, (pos.y+raio), 3));
-    }
 
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-        listaDeBalas.push_back(Projetil((pos.x+raio*2), (pos.y+raio), 4));
-    }
+
     
+    }      
 }
