@@ -1,0 +1,63 @@
+#include <SFML/Graphics.hpp>
+#include <optional>
+#include <vector>
+#include <algorithm>
+#include "jogo.h"
+
+
+Game::Game() : window(sf::VideoMode({800, 600}), "Meu Jogo UTFPR") {
+    window.setFramerateLimit(60);  
+    camera.setSize(sf::Vector2f(800.f, 600.f));
+
+}
+
+void Game:: Atualizar(){
+
+    sf::Vector2f posJogador = jogador.getPosiçao();
+    posJogador.y = 300;
+    camera.setCenter(posJogador);
+
+    jogador.gerenciarMovimentacao(map);
+    jogador.atirar(balas);
+    jogador.trocaCor();
+
+
+    for (auto& b : balas) {
+        b.movebala(); 
+    }
+    balas.erase(std::remove_if(balas.begin(), balas.end(), [](const Projetil& b) {
+        sf::Vector2f pos = b.getPosicao();
+        return (pos.x < 0 || pos.x > 5000 || pos.y < 0 || pos.y > 550);
+    }), balas.end());
+}
+
+void Game::Renderizar() {
+    window.clear();
+    window.setView(camera);
+
+    map.desenhar(window);
+    jogador.desenhar(window); 
+    
+    for (auto& b : balas) {
+        b.desenhar(window);   
+    }
+
+    window.display();
+}
+void Game::ProcessarEventos() {
+
+    while (const std::optional event = window.pollEvent()) {
+        
+        if (event->is<sf::Event::Closed>()) {
+            window.close();
+        }
+    }
+}
+
+void Game::Rodar() {
+    while (window.isOpen()) {
+        ProcessarEventos();
+        Atualizar();
+        Renderizar();
+    }
+}
